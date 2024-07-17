@@ -1,5 +1,5 @@
 class Api::V1::AdvertisementsController < ApplicationController
-  before_action :set_advertisement, only: %i[ show update destroy]
+  before_action :set_advertisement, only: %i[ show update destroy ]
 
   # GET /api/v1/advertisements
   def index
@@ -26,7 +26,7 @@ class Api::V1::AdvertisementsController < ApplicationController
 
   # PATCH/PUT /api/v1/advertisements/:id
   def update
-    if @advertisement.update
+    if @advertisement.update(advertisement_params)
       render json: AdvertisementSerializer.new(@advertisement).serializable_hash.to_json
     else
       render json: @advertisement.errors, status: :unprocessable_entity
