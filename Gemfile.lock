@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.5.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.1.3.4)
       actionpack (= 7.1.3.4)
       activesupport (= 7.1.3.4)
@@ -124,7 +126,6 @@ GEM
     irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.6.3)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
     jwt (2.8.2)
@@ -235,6 +236,7 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
+    state_machines (0.6.0)
     stringio (3.1.1)
     thor (1.3.1)
     timeout (0.4.1)
@@ -262,19 +264,20 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aasm
   bootsnap
   debug
   devise
   devise-jwt
   factory_bot_rails
   faker
-  json
   jsonapi-serializer
   pg (~> 1.1)
   puma (>= 5.0)
   rack-cors (~> 2.0)
   rails (~> 7.1.3, >= 7.1.3.4)
   rspec-rails
+  state_machines
   tzinfo-data
 
 RUBY VERSION
