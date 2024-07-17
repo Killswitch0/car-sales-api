@@ -33,3 +33,6 @@
 /config/master.key
 
 .rails.swp
+.DS_Store
+app/.DS_Store
+app/controllers/.DS_Store
