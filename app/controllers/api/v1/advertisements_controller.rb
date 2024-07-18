@@ -1,45 +1,59 @@
 class Api::V1::AdvertisementsController < ApplicationController
-  before_action :set_advertisement, only: %i[ show update destroy ]
+  before_action :set_advertisement, only: %i[ show update destroy destroy_photo ]
 
   # GET /api/v1/advertisements
+  #----------------------------------------------------------------------------
   def index
     @advertisements = Advertisement.all
+    @advertisements = current_user.advertisements if params[:my_advert].present?
     render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
   end
 
   # GET /api/v1/advertisements/:id
+  #----------------------------------------------------------------------------
   def show 
     render json: AdvertisementSerializer.new(@advertisement).serializable_hash.to_json
   end
 
   # POST /api/v1/advertisements
+  #----------------------------------------------------------------------------
   def create
-    @advertisement = Advertisement.new(advertisement_params)
+    @advertisement = current_user.advertisements.build(advertisement_params)
 
     if @advertisement.save 
       render json: AdvertisementSerializer.new(@advertisement).serializable_hash.to_json,
         status: :created
     else
-      render json: @advertisement.errors, status: :unprocessable_entity
+      render json: @advertisement.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /api/v1/advertisements/:id
+  #----------------------------------------------------------------------------
   def update
     if @advertisement.update(advertisement_params)
       render json: AdvertisementSerializer.new(@advertisement).serializable_hash.to_json
     else
-      render json: @advertisement.errors, status: :unprocessable_entity
+      render json: @advertisement.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   # DELETE /api/v1/advertisements/:id
+  #----------------------------------------------------------------------------
   def destroy
     @advertisement.destroy
     head :no_content
   end
 
+  # DELETE /api/v1/advertisements/:id/destroy_photo
+  #----------------------------------------------------------------------------
+  def destroy_photo
+    @advertisement.photo.purge
+    render json: { message: "Photo deleted successfully" }, status: :ok
+  end
+
   # GET /api/v1/advertisements/by_state?state=:state
+  #----------------------------------------------------------------------------
   def by_state
     @state = params[:state]
 
@@ -72,7 +86,7 @@ class Api::V1::AdvertisementsController < ApplicationController
         :engine_capacity,
         :phone_number,
         :name,
-        :user_id,
+        :photo,
         :state
       )
   end

@@ -12,5 +12,15 @@ FactoryBot.define do
     phone_number { Faker::PhoneNumber.cell_phone }
     name { Faker::Name.name.split[0] }
     user { nil }
+
+    transient do
+      photo_file_name { 'car-photo.jpg' }
+      photo_content_type { 'image/jpg' }
+    end
+
+    after(:build) do |advertisement, evaluator|
+      file_path = Rails.root.join('spec', 'support', 'assets', evaluator.photo_file_name)
+      advertisement.photo.attach(io: File.open(file_path), filename: evaluator.photo_file_name, content_type: evaluator.photo_content_type)
+    end
   end
 end

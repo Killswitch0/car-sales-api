@@ -31,11 +31,11 @@ RSpec.describe "Api::V1::Advertisements", type: :request do
   describe "POST /api/v1/advertisements" do
     context 'with valid parameters' do
       scenario 'creates a new advertisement' do
-        valid_params = attributes_for(:advertisement, user_id: user.id)
+        valid_params = attributes_for(:advertisement, user: user)
 
         post api_v1_advertisements_path, params: { advertisement: valid_params }
-
         expect(response).to have_http_status(201)
+        
         response_id = JSON.parse(response.body)['data']['id'].to_i
         expect(response_id).to eq(Advertisement.last.id)
       end
@@ -43,12 +43,10 @@ RSpec.describe "Api::V1::Advertisements", type: :request do
 
     context "with invalid parameters" do
       scenario 'does not create a new advertisement' do
-        invalid_params = { brand: nil, user_id: user.id } 
+        invalid_params = { brand: nil, user: user } 
 
         post api_v1_advertisements_path, params: { advertisement: invalid_params }
-
         expect(response).to have_http_status(422)
-        expect(JSON.parse(response.body)).to include('brand')
       end
     end
   end
@@ -74,6 +72,18 @@ RSpec.describe "Api::V1::Advertisements", type: :request do
 
       expect(response).to have_http_status(204)
       expect { Advertisement.find(advertisement.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "DELETE /api/v1/advertisements/:id/destroy_photo" do
+    let(:advertisement) { create(:advertisement, user: user) }
+
+    scenario 'user successfully delete advertisement photo' do
+      delete destroy_photo_api_v1_advertisement_path(advertisement)
+      advertisement.reload
+
+      expect(response).to have_http_status(200)
+      expect(advertisement.photo.attached?).to eq(false)
     end
   end
 

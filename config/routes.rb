@@ -15,6 +15,10 @@ Rails.application.routes.draw do
         collection do
           get 'by_state', to: 'advertisements#by_state'
         end
+
+        member do
+          delete :destroy_photo
+        end
       end
     end
   end
