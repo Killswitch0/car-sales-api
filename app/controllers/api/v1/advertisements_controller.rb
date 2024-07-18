@@ -1,11 +1,18 @@
 class Api::V1::AdvertisementsController < ApplicationController
-  before_action :set_advertisement, only: %i[ show update destroy destroy_photo ]
+  before_action :set_advertisement, only: %i[ show update destroy destroy_photo like unlike ]
 
   # GET /api/v1/advertisements
   #----------------------------------------------------------------------------
   def index
     @advertisements = Advertisement.all
     @advertisements = current_user.advertisements if params[:my_advert].present?
+    render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
+  end
+
+  # GET /api/v1/advertisements/favorites
+  #----------------------------------------------------------------------------
+  def favorites
+    @advertisements = Advertisement.joins(:likes).where('likes.user_id = ?', current_user)
     render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
   end
 
@@ -64,6 +71,20 @@ class Api::V1::AdvertisementsController < ApplicationController
     end
 
     render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
+  end
+
+  # POST /api/v1/advertisements/:id/like
+  #----------------------------------------------------------------------------
+  def like
+    current_user.likes.create(likeable: @advertisement)
+    head :no_content
+  end
+
+  # DELETE /api/v1/advertisements/:id/unlike
+  #----------------------------------------------------------------------------
+  def unlike
+    current_user.likes.find_by(likeable: @advertisement).destroy
+    head :no_content
   end
 
   private 

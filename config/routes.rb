@@ -13,11 +13,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :advertisements do
         collection do
-          get 'by_state', to: 'advertisements#by_state'
+          get :by_state
+          get :favorites
         end
 
         member do
+          post :like
+
           delete :destroy_photo
+          delete :unlike
         end
       end
     end

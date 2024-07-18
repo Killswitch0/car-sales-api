@@ -101,11 +101,34 @@ RSpec.describe "Api::V1::Advertisements", type: :request do
       expect(response_data[0]['attributes']['state']).to eq('pending')
     end
 
-    scenario "returns all advertisements when no state is provided" do
+    scenario 'returns all advertisements when no state is provided' do
       get '/api/v1/advertisements/by_state'
 
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data'].length).to eq(2)
+    end
+  end
+
+  describe "POST /api/v1/advertisements/:id/like" do
+    let(:advertisement) { create(:advertisement, user: user) }
+
+    scenario 'creates a like for the advertisement' do
+      post like_api_v1_advertisement_path(advertisement)
+
+      expect(response).to have_http_status(204)
+      expect(user.likes.exists?(likeable: advertisement)).to eq(true)
+    end
+  end
+
+  describe "DELETE /api/v1/advertisements/:id/unlike" do
+    let(:advertisement) { create(:advertisement, user: user) }
+    let!(:like) { create(:like, user: user, likeable: advertisement) }
+
+    scenario 'removes the like for the advertisement' do
+      delete unlike_api_v1_advertisement_path(advertisement)
+
+      expect(response).to have_http_status(204)
+      expect(user.likes.exists?(likeable: advertisement)).to eq(false)
     end
   end
 end
