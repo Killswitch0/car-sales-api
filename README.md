@@ -26,7 +26,7 @@ To get a local copy up and running follow these simple steps.
 Clone the repository using the GitHub link provided below.
 
 ```bash
-git clone https://github.com/your_username/car-sales-api.git
+git clone https://github.com/Killswitch0/car-sales-api.git
 cd car-sales-api
 ```
 
