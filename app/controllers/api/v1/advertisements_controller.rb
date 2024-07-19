@@ -99,7 +99,7 @@ class Api::V1::AdvertisementsController < ApplicationController
     head :no_content
   end
 
-  api :DELETE, '/api/v1/advertisements/:id/unlike', 'Unlikes an advertisement.'
+  api :DELETE, '/v1/advertisements/:id/unlike', 'Unlikes an advertisement.'
   param :id, :number, desc: 'ID of the advertisement', required: true
   #----------------------------------------------------------------------------
   def unlike

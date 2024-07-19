@@ -158,7 +158,7 @@ DELETE /api/v1/advertisements/{id}/unlike
 
 ## Admin panel
 
-After signing up you need to activate admin mode in app path in console:
+After signing up you need to activate admin mode in app directory in console:
 
 ```
 rails c
