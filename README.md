@@ -135,7 +135,7 @@ DELETE /api/v1/advertisements/{id}
 - Deletes the photo associated with an advertisement.'
 
 ```
-DELETE /v1/advertisements/:id/destroy_photo
+DELETE api/v1/advertisements/:id/destroy_photo
 ```
 
 - Returns advertisements by state:
@@ -167,7 +167,7 @@ u.admin = true
 u.save
 ```
 
-Then you need start server:
+Then you need to start server:
 
 ```
 rails server
