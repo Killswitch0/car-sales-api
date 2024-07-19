@@ -2,7 +2,7 @@
 
 ## About
 
-The Car Sales API is a RESTful web service designed for managing advertisements related to car sales. It provides endpoints to create, retrieve, update, and delete advertisements, as well as features for user authentication, liking advertisements, and applying various filters.
+The Car Sales API is a RESTful web service designed for managing advertisements related to car sales. It provides CRUD endpoints for advertisements, as well as features for user authentication, liking advertisements, and applying various filters.
 
 ## Features
 
@@ -102,13 +102,13 @@ Authorization: Bearer your_jwt_token
 http://127.0.0.1:3000/apipie
 ```
 
-- Retrieve all advertisements:
+- Returns all advertisements:
 
 ```
 GET /api/v1/advertisements
 ```
 
-- Retrieve a specific advertisement:
+- Returns a specific advertisement:
 
 ```
 GET /api/v1/advertisements/{id}
