@@ -20,7 +20,9 @@ RSpec.describe "Sessions", type: :request do
     scenario "user logout sucessfully" do 
       log_in(user)
 
-      delete destroy_user_session_path, headers: response.headers
+      headers = { "Authorization": response.headers["Authorization"] }
+
+      delete destroy_user_session_path, headers: headers
       expect(response).to have_http_status(200)
       
       json_response = JSON.parse(response.body)

@@ -52,5 +52,10 @@ module CarSalesApi
 
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Flash
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Session::CookieStore, {:key=>"_car_sales_api_session"}
   end
 end

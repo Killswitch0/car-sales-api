@@ -46,6 +46,8 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'annotate'
 end
 
 group :test do
@@ -58,3 +60,10 @@ gem "rack-cors", "~> 2.0"
 gem 'devise'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
+
+gem "rails_admin", "~> 3.1"
+gem "sassc-rails"
+
+gem "has_scope", "~> 0.8.2"
+
+gem "apipie-rails", "~> 1.4"
