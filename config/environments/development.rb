@@ -68,7 +68,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
-
-  # We will use port 3001 in our Rails app development and leave port 3000 for the React front-end app.
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3001 }
 end
