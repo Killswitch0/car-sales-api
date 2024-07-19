@@ -12,6 +12,7 @@
 #  updated_at             :datetime         not null
 #  name                   :string
 #  jti                    :string
+#  admin                  :boolean
 #
 class UserSerializer
   include JSONAPI::Serializer

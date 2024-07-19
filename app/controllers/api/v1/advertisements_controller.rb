@@ -1,25 +1,35 @@
 class Api::V1::AdvertisementsController < ApplicationController
   before_action :set_advertisement, only: %i[ show update destroy destroy_photo like unlike ]
 
+  has_scope :by_brand
+  has_scope :by_model
+  has_scope :by_body_type
+  has_scope :by_mileage
+  has_scope :by_colour
+  has_scope :by_price, using: %i[start_price, end_price]
+  has_scope :by_fuel
+  has_scope :by_year, using: %i[start_year, end_year]
+  has_scope :by_engine_capacity, using: %i[start_capacity, end_capacity]
+
   # GET /api/v1/advertisements
   #----------------------------------------------------------------------------
   def index
-    @advertisements = Advertisement.all
+    @advertisements = apply_scopes(Advertisement).all
     @advertisements = current_user.advertisements if params[:my_advert].present?
-    render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
+    render json: AdvertisementSerializer.new(@advertisements, include: [:user]).serializable_hash.to_json
   end
 
   # GET /api/v1/advertisements/favorites
   #----------------------------------------------------------------------------
   def favorites
     @advertisements = Advertisement.joins(:likes).where('likes.user_id = ?', current_user)
-    render json: AdvertisementSerializer.new(@advertisements).serializable_hash.to_json
+    render json: AdvertisementSerializer.new(@advertisements, include: [:user]).serializable_hash.to_json
   end
 
   # GET /api/v1/advertisements/:id
   #----------------------------------------------------------------------------
   def show 
-    render json: AdvertisementSerializer.new(@advertisement).serializable_hash.to_json
+    render json: AdvertisementSerializer.new(@advertisement, include: [:user]).serializable_hash.to_json
   end
 
   # POST /api/v1/advertisements

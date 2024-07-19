@@ -61,3 +61,9 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
 
+gem "rails_admin", "~> 3.1"
+gem "sassc-rails"
+
+gem "has_scope", "~> 0.8.2"
+
+gem "apipie-rails", "~> 1.4"

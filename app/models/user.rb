@@ -12,6 +12,7 @@
 #  updated_at             :datetime         not null
 #  name                   :string
 #  jti                    :string
+#  admin                  :boolean
 #
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
