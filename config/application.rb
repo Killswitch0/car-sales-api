@@ -48,6 +48,7 @@ module CarSalesApi
                        helper_specs: false,
                        routing_specs: false,
                        request_specs: true,
+                       models_spec: false,
                        controller_specs: false
 
       g.fixture_replacement :factory_bot, dir: 'spec/factories'

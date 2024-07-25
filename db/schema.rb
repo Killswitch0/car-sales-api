@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_182916) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_114059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_182916) do
     t.index ["user_id"], name: "index_advertisements_on_user_id"
   end
 
+  create_table "car_brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "car_models", force: :cascade do |t|
+    t.string "name"
+    t.bigint "car_brand_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_brand_id"], name: "index_car_models_on_car_brand_id"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "likeable_type", null: false
@@ -91,5 +105,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_182916) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "advertisements", "users"
+  add_foreign_key "car_models", "car_brands"
   add_foreign_key "likes", "users"
 end
