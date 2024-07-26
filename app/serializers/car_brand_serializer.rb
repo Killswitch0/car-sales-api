@@ -11,5 +11,5 @@ class CarBrandSerializer
   include JSONAPI::Serializer
   attributes :name
 
-  has_many :models, serializer: 'CarBrand'
+  has_many :models, serializer: CarModelSerializer
 end

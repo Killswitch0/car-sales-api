@@ -37,12 +37,16 @@ class AdvertisementSerializer
              :state,
              :likes_count
 
+  attribute :photo do |advert| 
+    advert.get_photo_url
+  end
+
   attribute :price_statistics do |advert|
     advertisement = Advertisement.by_brand(advert.brand).by_model(advert.model)
 
     {
       min: advertisement.maximum(:price),
-      avg: advertisement.average(:price),
+      avg: advertisement.average(:price).round,
       max: advertisement.maximum(:price)
     }
   end
