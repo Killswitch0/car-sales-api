@@ -21,6 +21,8 @@
 #  likes_count     :integer          default(0)
 #
 class Advertisement < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   enum state: %i[ pending rejected approved ]
 
   belongs_to :user
@@ -52,4 +54,9 @@ class Advertisement < ApplicationRecord
   validates :engine_capacity, presence: true
   validates :phone_number, presence: true
   validates :name, presence: true
+
+  def get_photo_url
+    return unless self.photo.attached?
+    url_for(self.photo)
+  end
 end

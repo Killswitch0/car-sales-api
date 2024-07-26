@@ -27,6 +27,9 @@ Rails.application.routes.draw do
           delete :unlike
         end
       end
+
+      resources :car_brands, only: :index
+      resources :car_models, only: :index
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -24,7 +24,7 @@ class Api::V1::AdvertisementsController < ApplicationController
   api :GET, '/v1/advertisements/favorites', 'Returns a list of advertisements marked as favorites by the current user.'
   #----------------------------------------------------------------------------
   def favorites
-    @advertisements = Advertisement.joins(:likes).where('likes.user_id = ?', current_user)
+    @advertisements = Advertisement.joins(:likes).where(likes: { user_id: current_user })
     render json: AdvertisementSerializer.new(@advertisements, include: [:user]).serializable_hash.to_json
   end
 
